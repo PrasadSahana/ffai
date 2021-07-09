@@ -109,7 +109,7 @@ class CNNPolicy(nn.Module):
 
 class A2CAgent(Agent):
 
-    def __init__(self, name, env_name=env_name, filename=model_filename, copy_game=True, exclude_pathfinding_moves=True):
+    def __init__(self, name, env_name=env_name, filename=model_filename, copy_game=True, exclude_pathfinding_moves=False):
         super().__init__(name)
         self.my_team = None
         self.env = self.make_env(env_name)
@@ -283,7 +283,7 @@ class A2CAgent(Agent):
 
 
 # Register the bot to the framework
-ffai.register_bot('my-a2c-bot', A2CAgent)
+ffai.register_bot('Grootbot', A2CAgent)
 
 '''
 import ffai.web.server as server
@@ -297,7 +297,7 @@ if __name__ == "__main__":
     # Load configurations, rules, arena and teams
     config = ffai.load_config("bot-bowl-iii")
     config.competition_mode = False
-    config.pathfinding_enabled = False
+    config.pathfinding_enabled = True
     ruleset = ffai.load_rule_set(config.ruleset)
     arena = ffai.load_arena(config.arena)
     home = ffai.load_team_by_filename("human", ruleset)
@@ -317,9 +317,9 @@ if __name__ == "__main__":
 
         if is_home:
             away_agent = ffai.make_bot('random')
-            home_agent = ffai.make_bot('my-a2c-bot')
+            home_agent = ffai.make_bot('Grootbot')
         else:
-            away_agent = ffai.make_bot('my-a2c-bot')
+            away_agent = ffai.make_bot('Grootbot')
             home_agent = ffai.make_bot("random")
         game = ffai.Game(i, home, away, home_agent, away_agent, config, arena=arena, ruleset=ruleset)
         game.config.fast_mode = True
