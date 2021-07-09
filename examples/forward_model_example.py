@@ -17,7 +17,7 @@ game.enable_forward_model()
 step_id = game.get_step()
 
 # Force determinism?
-# game.set_seed(1)  # Force determinism
+game.set_seed(1)  # Force determinism
 
 # Take some actions
 game.step(Action(ActionType.START_GAME))
