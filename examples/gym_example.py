@@ -16,7 +16,7 @@ if __name__ == "__main__":
     # env = gym.make("FFAI-3-v3")
     env = gym.make("FFAI-1-v3")
 
-    # env.config.pathfinding_enabled = True
+    env.config.pathfinding_enabled = True
 
     # Get observations space (layer, height, width)
     obs_space = env.observation_space
