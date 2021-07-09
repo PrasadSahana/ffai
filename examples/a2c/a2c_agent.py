@@ -12,10 +12,10 @@ import matplotlib.pyplot as plt
 import sys
 
 # Architecture
-model_name = '585f6180-7f54-11eb-918b-acde48001122'
+model_name = 'Grootbot'
 env_name = 'FFAI-v3'
-model_filename = f"models/{env_name}/{model_name}.nn"
-log_filename = f"logs/{env_name}/{env_name}.dat"
+model_filename = f"models/{'Grootbot'}.nn"
+log_filename = f"logs/{'Grootbot'}.dat"
 
 
 class CNNPolicy(nn.Module):
