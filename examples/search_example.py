@@ -89,7 +89,7 @@ away = ffai.load_team_by_filename("human", ruleset)
 config.competition_mode = False
 config.debug_mode = False
 config.fast_mode = True
-config.pathfinding_enabled = False
+config.pathfinding_enabled = True
 
 # Play a game
 bot_a = ffai.make_bot("search-bot")

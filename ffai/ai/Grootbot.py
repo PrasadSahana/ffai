@@ -10,10 +10,11 @@ import torch.nn as nn
 import torch.nn.functional as F
 import matplotlib.pyplot as plt
 import sys
+import ffai.web.server as server
 
 # Architecture
-model_name = '585f6180-7f54-11eb-918b-acde48001122'
-env_name = 'FFAI-v3'
+model_name = 'Grootbot_Model'
+env_name = 'FFAI-1-v3'
 model_filename = f"models/{env_name}/{model_name}.nn"
 log_filename = f"logs/{env_name}/{env_name}.dat"
 
@@ -109,7 +110,7 @@ class CNNPolicy(nn.Module):
 
 class A2CAgent(Agent):
 
-    def __init__(self, name, env_name=env_name, filename=model_filename, copy_game=True, exclude_pathfinding_moves=True):
+    def __init__(self, name, env_name=env_name, filename=model_filename, copy_game=True, exclude_pathfinding_moves=False):
         super().__init__(name)
         self.my_team = None
         self.env = self.make_env(env_name)
@@ -282,62 +283,7 @@ class A2CAgent(Agent):
         return env
 
 
-# Register the bot to the framework
-ffai.register_bot('my-a2c-bot', A2CAgent)
-
-'''
-import ffai.web.server as server
+ffai.register_bot('Grootbot', A2CAgent)
+       
 if __name__ == "__main__":
-    server.start_server(debug=True, use_reloader=False)
-'''
-
-if __name__ == "__main__":
-
-    # Load configurations, rules, arena and teams
-    config = ffai.load_config("bot-bowl-iii")
-    config.competition_mode = False
-    config.pathfinding_enabled = False
-    ruleset = ffai.load_rule_set(config.ruleset)
-    arena = ffai.load_arena(config.arena)
-    home = ffai.load_team_by_filename("human", ruleset)
-    away = ffai.load_team_by_filename("human", ruleset)
-    config.competition_mode = False
-    config.debug_mode = False
-
-    # Play 100 games
-    game_times = []
-    wins = 0
-    draws = 0
-    n = 100
-    is_home = True
-    tds_away = 0
-    tds_home = 0
-    for i in range(n):
-
-        if is_home:
-            away_agent = ffai.make_bot('random')
-            home_agent = ffai.make_bot('my-a2c-bot')
-        else:
-            away_agent = ffai.make_bot('my-a2c-bot')
-            home_agent = ffai.make_bot("random")
-        game = ffai.Game(i, home, away, home_agent, away_agent, config, arena=arena, ruleset=ruleset)
-        game.config.fast_mode = True
-
-        print("Starting game", (i+1))
-        game.init()
-        print("Game is over")
-
-        winner = game.get_winner()
-        if winner is None:
-            draws += 1
-        elif winner == home_agent and is_home:
-            wins += 1
-        elif winner == away_agent and not is_home:
-            wins += 1
-
-        tds_home += game.get_agent_team(home_agent).state.score
-        tds_away += game.get_agent_team(away_agent).state.score
-
-    print(f"Home/Draws/Away: {wins}/{draws}/{n-wins-draws}")
-    print(f"Home TDs per game: {tds_home/n}")
-    print(f"Away TDs per game: {tds_away/n}")
+    server.start_server(port=1234)
