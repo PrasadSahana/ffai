@@ -162,14 +162,6 @@ class FFAIEnv(gym.Env):
     ]
 
     def __init__(self, config, home_team, away_team, opp_actor=None):
-        if FFAIEnv.class_initialized == False: 
-            FFAIEnv.class_initialized = True 
-            print("FFAI inittialized!")
-        self.scripted_behavior = FFAIEnv.scripted_behavior
-        
-        self.actions                    = FFAIEnv.actions
-        self.positional_action_types    = FFAIEnv.positional_action_types
-        self.simple_action_types        = FFAIEnv.simple_action_types
         self.__version__ = "0.0.3"
         self.config = config
         self.config.competition_mode = False
